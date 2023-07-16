@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+    tools {
+        maven 'Maven-Tool'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/Shahid199578/jenkins-s3-pipeline.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+        
+        stage('Push to S3') {
+            steps {
+                withAWS {
+                    sh 'aws s3 cp target/*.jar s3://s3-artifactjenkins/'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+    }
+}
