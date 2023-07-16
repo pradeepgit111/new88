@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Shahid199578/jenkins-s3-pipeline.git'
+                git branch: 'master', url: 'https://github.com/Shahid199578/jenkins-s3-pipeline.git'
             }
         }
         
